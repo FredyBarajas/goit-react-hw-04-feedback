@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 import {
   StatsList,
   StatsBar,
@@ -8,53 +8,57 @@ import {
   StatsData,
 } from './StyledStatistics';
 
-class Statistics extends Component {
-  render() {
-    const { good, neutral, bad, total, positiveFeedback } = this.props;
+const Statistics = ({ good, neutral, bad, total, positiveFeedback }) => {
+  const maxWidth = Math.max(good, neutral, bad);
 
-    return (
-      <div>
-        <StatsSection>
-          <StatsList>
-            <li>Good: {good}</li>
-            <li>Neutral: {neutral}</li>
-            <li>Bad: {bad}</li>
-          </StatsList>
+  return (
+    <div>
+      <StatsSection>
+        <StatsList>
+          <li>Good: {good}</li>
+          <li>Neutral: {neutral}</li>
+          <li>Bad: {bad}</li>
+        </StatsList>
 
-          <StatsList>
-            <li>
-              <StatsBar
-                width={`${(good * 180) / Math.max(good, neutral, bad)}px`}
-                bgcolor="green"
-              ></StatsBar>
-            </li>
-            <li>
-              <StatsBar
-                width={`${(neutral * 180) / Math.max(good, neutral, bad)}px`}
-                bgcolor="yellow"
-              ></StatsBar>
-            </li>
-            <li>
-              <StatsBar
-                width={`${(bad * 180) / Math.max(good, neutral, bad)}px`}
-                bgcolor="red"
-              ></StatsBar>
-            </li>
-          </StatsList>
-        </StatsSection>
-        <StatsSection>
-          <StatsResult>
-            <StatsData>{total}</StatsData>
-            <StatsLabel>Total</StatsLabel>
-          </StatsResult>
-          <StatsResult>
-            <StatsData>{positiveFeedback}%</StatsData>
-            <StatsLabel>Positive</StatsLabel>
-          </StatsResult>
-        </StatsSection>
-      </div>
-    );
-  }
-}
+        <StatsList>
+          <li>
+            <StatsBar
+              style={{
+                width: `${(good * 180) / maxWidth}px`,
+                backgroundColor: 'green',
+              }}
+            ></StatsBar>
+          </li>
+          <li>
+            <StatsBar
+              style={{
+                width: `${(neutral * 180) / maxWidth}px`,
+                backgroundColor: 'yellow',
+              }}
+            ></StatsBar>
+          </li>
+          <li>
+            <StatsBar
+              style={{
+                width: `${(bad * 180) / maxWidth}px`,
+                backgroundColor: 'red',
+              }}
+            ></StatsBar>
+          </li>
+        </StatsList>
+      </StatsSection>
+      <StatsSection>
+        <StatsResult>
+          <StatsData>{total}</StatsData>
+          <StatsLabel>Total</StatsLabel>
+        </StatsResult>
+        <StatsResult>
+          <StatsData>{positiveFeedback}%</StatsData>
+          <StatsLabel>Positive</StatsLabel>
+        </StatsResult>
+      </StatsSection>
+    </div>
+  );
+};
 
 export default Statistics;
